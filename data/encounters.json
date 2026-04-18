@@ -1,0 +1,20 @@
+[
+    {
+        "patient_id": "353c09a7-c591-45a7-8f94-7e53f167e77b",
+        "triage_level": 3,
+        "symptoms": "fiebre alta y agitaci\u00f3n",
+        "id": "149a6755-8635-464c-a214-8bc832ba08fb",
+        "status": "Discharged",
+        "arrival_time": "2026-04-18T10:25:06.621963",
+        "discharge_time": "2026-04-18T10:34:27.549194"
+    },
+    {
+        "patient_id": "353c09a7-c591-45a7-8f94-7e53f167e77b",
+        "triage_level": 5,
+        "symptoms": "cansancio",
+        "id": "43a6139d-f4b1-43bd-a6fc-6dd922237a1f",
+        "status": "Attended",
+        "arrival_time": "2026-04-18T10:35:13.689058",
+        "discharge_time": null
+    }
+]

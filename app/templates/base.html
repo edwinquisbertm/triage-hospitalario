@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-gray-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triage Hospitalario</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        triage: {
+                            1: '#ef4444', // Red
+                            2: '#f97316', // Orange
+                            3: '#eab308', // Yellow
+                            4: '#22c55e', // Green
+                            5: '#3b82f6', // Blue
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .glass {
+                @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+            }
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="h-full text-slate-800 antialiased flex flex-col">
+    <!-- Navbar -->
+    <nav class="bg-slate-900 text-white shadow-md relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 font-bold text-xl tracking-wider text-blue-400">
+                        <a href="{{ url_for('registration.register') }}">MED<span class="text-white">TRIAGE</span></a>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="{{ url_for('registration.register') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors duration-200">Registrar Paciente</a>
+                            <a href="{{ url_for('queue.view_queue') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors duration-200">Cola de Espera</a>
+                            <a href="{{ url_for('beds.view_beds') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors duration-200">Mapa de Camas</a>
+                            <a href="{{ url_for('history.search_history') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-700 hover:text-white transition-colors duration-200">Historial Clínico</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
+        <!-- Flash Messages -->
+        <div class="mb-6 space-y-2">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="p-4 rounded-lg shadow-sm backdrop-blur-sm transition-all transform animate-fade-in-down
+                            {% if category == 'error' %} bg-red-100/90 text-red-800 border-l-4 border-red-500
+                            {% elif category == 'success' %} bg-green-100/90 text-green-800 border-l-4 border-green-500
+                            {% else %} bg-blue-100/90 text-blue-800 border-l-4 border-blue-500 {% endif %}">
+                            <p class="font-medium">{{ message }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        
+        <!-- Background decorative blob -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 rounded-full bg-blue-400 opacity-10 blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-emerald-400 opacity-10 blur-3xl pointer-events-none"></div>
+        
+        <div class="relative z-10">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-6 mt-auto">
+        <div class="max-w-7xl mx-auto text-center text-sm text-gray-500">
+            &copy; 2026 MedTriage Hospital System. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

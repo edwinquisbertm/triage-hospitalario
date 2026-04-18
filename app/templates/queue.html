@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+        <div>
+            <h2 class="text-3xl font-bold text-slate-800 tracking-tight">Cola de Espera</h2>
+            <p class="text-slate-500 mt-1">Pacientes ordenados por prioridad médica automáticamente.</p>
+        </div>
+        <div class="mt-4 md:mt-0 flex gap-2">
+            <!-- Triage Legend -->
+            <div class="flex items-center space-x-3 text-xs bg-white py-2 px-4 rounded-full shadow border border-slate-100">
+                <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-red-500 mr-1"></span> I</span>
+                <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-orange-500 mr-1"></span> II</span>
+                <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-yellow-500 mr-1"></span> III</span>
+                <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-green-500 mr-1"></span> IV</span>
+                <span class="flex items-center"><span class="w-3 h-3 rounded-full bg-blue-500 mr-1"></span> V</span>
+            </div>
+        </div>
+    </div>
+
+    {% if queue|length == 0 %}
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-12 text-center transform transition-all hover:scale-105 duration-300">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-50 text-blue-500 mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <h3 class="text-xl font-medium text-slate-800">No hay pacientes en espera</h3>
+            <p class="text-slate-500 mt-2">La sala de espera está vacía en este momento.</p>
+        </div>
+    {% else %}
+        <div class="grid gap-4">
+            {% for enc in queue %}
+                {% set color_class = 'border-l-blue-500 bg-blue-50/30' %}
+                {% set badge_class = 'bg-blue-100 text-blue-800' %}
+                
+                {% if enc.triage_level == 1 %}
+                    {% set color_class = 'border-l-red-500 bg-red-50/30' %}
+                    {% set badge_class = 'bg-red-100 text-red-800' %}
+                {% elif enc.triage_level == 2 %}
+                    {% set color_class = 'border-l-orange-500 bg-orange-50/30' %}
+                    {% set badge_class = 'bg-orange-100 text-orange-800' %}
+                {% elif enc.triage_level == 3 %}
+                    {% set color_class = 'border-l-yellow-500 bg-yellow-50/30' %}
+                    {% set badge_class = 'bg-yellow-100 text-yellow-800' %}
+                {% elif enc.triage_level == 4 %}
+                    {% set color_class = 'border-l-green-500 bg-green-50/30' %}
+                    {% set badge_class = 'bg-green-100 text-green-800' %}
+                {% endif %}
+
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 border-l-4 {{ color_class }} overflow-hidden hover:shadow-md transition-shadow">
+                    <div class="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-1">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider {{ badge_class }}">
+                                    Nivel {{ enc.triage_level }}
+                                </span>
+                                <h3 class="text-lg font-bold text-slate-800">{{ enc.patient_name }}</h3>
+                                <span class="text-sm text-slate-500">· CI: {{ enc.patient_cedula }}</span>
+                            </div>
+                            <p class="text-slate-600 text-sm mt-2 line-clamp-2">{{ enc.symptoms }}</p>
+                            <div class="flex items-center gap-2 mt-3 text-xs text-slate-500 font-medium">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Llegada: {{ enc.arrival_time[:16].replace('T', ' ') }}
+                            </div>
+                        </div>
+                        
+                        <!-- Actions -->
+                        <div class="flex-shrink-0 flex items-center justify-end">
+                            <!-- Attend Button (Only makes sense for the top priority mostly, but let's allow it for all) -->
+                            <form action="{{ url_for('queue.attend_next', encounter_id=enc.encounter_id) }}" method="POST">
+                                <button type="submit" class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900 transition-colors">
+                                    Atender y Asignar Cama
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

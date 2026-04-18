@@ -1,0 +1,72 @@
+[
+    {
+        "id": "a2e42da4-6f25-4266-9dfe-cd39a86ebb74",
+        "bed_number": "B01",
+        "zone": "General",
+        "status": "Occupied",
+        "current_encounter_id": "43a6139d-f4b1-43bd-a6fc-6dd922237a1f"
+    },
+    {
+        "id": "ad845b5c-7ac6-4dd4-852c-00ab29a315a5",
+        "bed_number": "B02",
+        "zone": "General",
+        "status": "Available",
+        "current_encounter_id": null
+    },
+    {
+        "id": "f69942b7-1662-4de9-9a4b-f05f0b6c5e4e",
+        "bed_number": "B03",
+        "zone": "General",
+        "status": "Available",
+        "current_encounter_id": null
+    },
+    {
+        "id": "802b9f82-08c8-4a22-8ba7-ac9bc421a525",
+        "bed_number": "B04",
+        "zone": "General",
+        "status": "Available",
+        "current_encounter_id": null
+    },
+    {
+        "id": "ecc14083-0a18-421e-a4a3-ea9095a1e462",
+        "bed_number": "B05",
+        "zone": "General",
+        "status": "Available",
+        "current_encounter_id": null
+    },
+    {
+        "id": "11ba1f35-dfb9-483f-9c26-9835819fe329",
+        "bed_number": "B06",
+        "zone": "General",
+        "status": "Available",
+        "current_encounter_id": null
+    },
+    {
+        "id": "047198b3-98e7-4fa3-aee6-d1ab00a5a710",
+        "bed_number": "B07",
+        "zone": "General",
+        "status": "Available",
+        "current_encounter_id": null
+    },
+    {
+        "id": "36e1c45c-fa59-4583-bbe7-467da238750c",
+        "bed_number": "B08",
+        "zone": "General",
+        "status": "Available",
+        "current_encounter_id": null
+    },
+    {
+        "id": "0a461414-9f48-4719-a627-0b4336675a6a",
+        "bed_number": "B09",
+        "zone": "General",
+        "status": "Available",
+        "current_encounter_id": null
+    },
+    {
+        "id": "26d175b3-1c7f-4c07-aeb0-56e5d8c6b021",
+        "bed_number": "B10",
+        "zone": "General",
+        "status": "Available",
+        "current_encounter_id": null
+    }
+]
